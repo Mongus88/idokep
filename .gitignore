@@ -1,0 +1,14 @@
+.env
+
+.venv/
+__pycache__/
+*.py[cod]
+
+*.png
+*.csv
+*.txt
+test-results/
+playwright-report/
+
+.idea/
+.vscode/
