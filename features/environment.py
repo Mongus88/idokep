@@ -25,6 +25,10 @@ def before_all(context):
 def before_scenario(context, scenario):
     context.page = context.browser_context.new_page()
 
+    context.tracing_context = context.browser.new_context()
+    context.tracing_context.tracing.start(screenshots=True, snapshots=True, sources=True)
+    context.page = context.tracing_context.new_page()
+
     context.base_page = BasePage(context.page)
     context.precipitation_page = PrecipitationPage(context.page)
     context.hun_heat_page = HunHeatPage(context.page)
@@ -32,7 +36,13 @@ def before_scenario(context, scenario):
 
 
 def after_scenario(context, scenario):
+    if scenario.status == "failed":
+        context.tracing_context.tracing.stop(path=f"trace_{scenario.name.replace(' ', '_')}.zip")
+    else:
+        context.tracing_context.tracing.stop()
+
     context.page.close()
+    context.tracing_context.close()
 
 
 def after_all(context):
