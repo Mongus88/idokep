@@ -19,7 +19,6 @@ class BasePage:
             self.page.get_by_role("button", name="CONFIRM")
             .or_(self.page.get_by_role("button", name="Close success modal"))
             .or_(self.page.locator("#accept-btn"))
-            .or_(self.page.get_by_role("button", name="OK"))
         )
 
         for _ in range(3):
