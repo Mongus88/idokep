@@ -19,21 +19,6 @@ def before_all(context):
 def before_scenario(context, scenario):
     context.page = context.browser_context.new_page()
 
-    context.page.add_locator_handler(
-        context.page.locator("#accept-btn"),
-        lambda overlay: overlay.click()
-    )
-
-    context.page.add_locator_handler(
-        context.page.get_by_role("button", name="Confirm"),
-        lambda overlay: overlay.click()
-    )
-
-    context.page.add_locator_handler(
-        context.page.get_by_role("button", name="Close success modal"),
-        lambda overlay: overlay.click()
-    )
-
     context.base_page = BasePage(context.page)
     context.precipitation_page = PrecipitationPage(context.page)
     context.hun_heat_page = HunHeatPage(context.page)
