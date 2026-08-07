@@ -15,19 +15,22 @@ class BasePage:
         return os.getenv("BASE_URL")
 
     def dismiss_cookie_banners(self):
+        any_cookie_button = (
+            self.page.get_by_role("button", name="CONFIRM")
+            .or_(self.page.get_by_role("button", name="Close success modal"))
+            .or_(self.page.locator("#accept-btn"))
+            .or_(self.page.get_by_role("button", name="OK"))
+        )
 
-        possible_buttons = [
-            self.page.get_by_role("button", name="Close success modal"),
-            self.page.get_by_role("button", name="Confirm"),
-            self.page.locator("#accept-btn"),
-        ]
-
-        for button in possible_buttons:
+        for _ in range(3):
             try:
-                if button.is_visible(timeout=1500):
-                    button.click()
+                if any_cookie_button.first.is_visible(timeout=2000):
+                    any_cookie_button.first.click(force=True)
+                    self.page.wait_for_timeout(300)
+                else:
+                    break
             except Exception:
-                continue
+                break
 
     def open_page(self, city):
         self.page.goto(f'{self.base_url()}/idojaras/{city}')
