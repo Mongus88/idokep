@@ -53,3 +53,4 @@ jobs:
             *.png
             *.csv
             *.txt
+            traces/*.zip

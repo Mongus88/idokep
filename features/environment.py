@@ -14,6 +14,8 @@ def before_all(context):
 
     context.browser_context = context.browser.new_context(viewport={"width": 1920, "height": 1080})
 
+    context.browser_context.tracing.start(screenshots=True, snapshots=True, sources=True)
+
     temp_page = context.browser_context.new_page()
     temp_page.goto(f"{BasePage.base_url()}/idojaras/Budapest", wait_until="domcontentloaded")
     try:
@@ -43,6 +45,8 @@ def after_scenario(context, scenario):
 
 
 def after_all(context):
+    os.makedirs("traces", exist_ok=True)
+    context.browser_context.tracing.stop(path="traces/trace.zip")
 
     context.browser_context.close()
     context.browser.close()
