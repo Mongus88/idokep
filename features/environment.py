@@ -1,6 +1,6 @@
-from playwright.sync_api import sync_playwright
+import os
 
-import re
+from playwright.sync_api import sync_playwright
 
 from pages.base_page import BasePage
 from pages.budapest_page import BudapestPage
@@ -14,6 +14,8 @@ def before_all(context):
 
     context.browser_context = context.browser.new_context(viewport={"width": 1920, "height": 1080})
 
+    context.browser_context.tracing.start(screenshots=True, snapshots=True, sources=True)
+
     temp_page = context.browser_context.new_page()
     temp_page.goto(f"{BasePage.base_url()}/idojaras/Budapest", wait_until="domcontentloaded")
     try:
@@ -25,8 +27,6 @@ def before_all(context):
 
 
 def before_scenario(context, scenario):
-    context.browser_context.tracing.start(screenshots=True, snapshots=True, sources=True)
-
     context.page = context.browser_context.new_page()
 
     context.base_page = BasePage(context.page)
@@ -36,18 +36,13 @@ def before_scenario(context, scenario):
 
 
 def after_scenario(context, scenario):
-
-    clean_name = re.sub(r'[^\w\-_.]', '_', scenario.name)
-
-    if scenario.status == "failed":
-        context.browser_context.tracing.stop(path=f"trace_{clean_name}.zip")
-    else:
-        context.browser_context.tracing.stop()
-
     context.page.close()
 
 
 def after_all(context):
+    os.makedirs("traces", exist_ok=True)
+    context.browser_context.tracing.stop(path="traces/trace.zip")
+
     context.browser_context.close()
     context.browser.close()
     context.playwright.stop()
