@@ -29,6 +29,11 @@ def before_scenario(context, scenario):
         lambda overlay: overlay.click()
     )
 
+    context.page.add_locator_handler(
+        context.page.get_by_role("button", name="Close success modal"),
+        lambda overlay: overlay.click()
+    )
+
     context.base_page = BasePage(context.page)
     context.precipitation_page = PrecipitationPage(context.page)
     context.hun_heat_page = HunHeatPage(context.page)
