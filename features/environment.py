@@ -22,7 +22,12 @@ def before_all(context):
         temp_page.locator("#accept-btn").click(timeout=5000)
     except Exception:
         pass
-    finally:
+
+    try:
+        temp_page.get_by_role("button", name="Confirm").click(timeout=5000)
+    except Exception:
+        pass
+
         temp_page.close()
 
 
