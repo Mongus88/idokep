@@ -11,6 +11,7 @@ class BudapestPage(BasePage):
         super().__init__(page)
         self.what_to_wear = self.page.locator("span.what-to-wear")
         self.day_elements = self.page.locator(".ik.dailyForecastCol")
+        self.actual_day = self.page.locator(".ik.dfDayNum")
 
         self.rainy_days_results = []
 
@@ -21,7 +22,14 @@ class BudapestPage(BasePage):
     def rainy_days(self, days=4, skip_today=True):
         self.rainy_days_results = []
 
-        start = 1 if skip_today else 0
+        today = datetime.today().day
+        act_day = self.actual_day.first.inner_text()
+
+        if today == int(act_day):
+            start = skip_today
+        else:
+            start = 0
+
         end = days + start
 
         for i in range(start, end):
@@ -37,3 +45,5 @@ class BudapestPage(BasePage):
                 will_rain = "Nem"
 
             self.rainy_days_results.append({"Dátum": day_number, "Fog esni az eső?": will_rain})
+
+        return self.rainy_days_results

@@ -23,12 +23,10 @@ class BasePage:
 
         for _ in range(3):
             try:
-                if any_cookie_button.first.is_visible(timeout=2000):
+                if any_cookie_button.first.wait_for(state="visible", timeout=3000):
                     any_cookie_button.first.click(force=True)
                     self.page.wait_for_timeout(300)
-                else:
-                    break
-            except Exception:
+            except TimeoutError:
                 break
 
     def open_page(self, city):
