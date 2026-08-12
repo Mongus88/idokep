@@ -1,6 +1,6 @@
 from behave import given, when, step, then
 
-from utils.file_writer import save_screenshot
+from features.utils.file_writer import save_screenshot
 
 
 @when('go to precipitation map page')

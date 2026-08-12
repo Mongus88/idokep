@@ -2,6 +2,7 @@ import os
 
 from dotenv import load_dotenv
 from playwright.sync_api import expect
+from playwright.sync_api import expect, TimeoutError as PlaywrightTimeoutError
 
 load_dotenv()
 
@@ -23,11 +24,13 @@ class BasePage:
 
         for _ in range(3):
             try:
-                if any_cookie_button.first.wait_for(state="visible", timeout=3000):
-                    any_cookie_button.first.click(force=True)
-                    self.page.wait_for_timeout(300)
-            except TimeoutError:
+                any_cookie_button.first.wait_for(state="visible", timeout=3000)
+                any_cookie_button.first.click(force=True)
+                self.page.wait_for_timeout(300)
+            except PlaywrightTimeoutError:
                 break
+
+        self.page.locator("#qc-cmp2-container").wait_for(state="hidden", timeout=5000)
 
     def open_page(self, city):
         self.page.goto(f'{self.base_url()}/idojaras/{city}')

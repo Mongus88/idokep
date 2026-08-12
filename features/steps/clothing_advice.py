@@ -1,6 +1,6 @@
 from behave import given, when, then
 
-from utils.file_writer import save_txt
+from features.utils.file_writer import save_txt
 
 
 @when('see what clothes it recommends today')

@@ -3,7 +3,7 @@ from datetime import datetime
 from playwright.sync_api import expect
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 
-from pages.base_page import BasePage
+from features.pages.base_page import BasePage
 
 
 class BudapestPage(BasePage):
