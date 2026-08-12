@@ -1,5 +1,5 @@
 
-# Asura teszt feladat
+# Teszt feladat
 
 ## A feladat leírása:
 - Az idokep.hu oldalról szedje össze, hogy milyen ruhát javasol a mai napra, az eredményt mentse le egy szöveges file-ba
@@ -24,17 +24,15 @@ A biztos működést a modern és stabil szelektorok használata és a playwrigh
 
 ## Futtatás
 ### local:
-Töltsd le az összes mappát és fájlt és a terminálba írd be: behave features
+Töltsd le az összes mappát és fájlt és a terminálba írd be: behave features. A local futtatáshoz szükséges a .env fájl amiben a base url van.
 
 ### GitAction
 Válaszd ki a Run Behave Playwright Tests workflows-t és kattints a run workflows-ra
 
 ## Összegzés
-A feladat megoldásával szemben támasztott elvárásaim részben teljesültek.  
-Pro:  
-A projekt szerkezete rendezett, jól bővíthető és local környezetben stabilan fut.  
-Contra:  
-Git Actional való CI folyamatba kötésnél a feladat elbukik.
-- a cookie-t nem találja időtullépéssel leáll, FIX
-- a felső menu sávot nem találja és időtullépéssel leáll így a képeket se menti le
-- a menüsáv felett van egy elem (id=qc-cmp2-container) ami miatt nem működik a fügvényem
+A feladat megoldásával szemben támasztott elvárásaim teljesültek.
+
+Tovább fejleszthető a projekt a következőkkel:
+* landing_page létrehozása, hogy ne minden városnka külön legyen egy page oldala
+* a playwright akciókat expect-el bővíteni ami segíti a hibakeresést
+* a feature fájlok gherkin leírásait átfogalmazni
